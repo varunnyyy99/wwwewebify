@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronForge Gym – Indore's Premier Fitness Centre</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#080808;--dark:#111111;--card:#161616;--yellow:#F5C200;--yellow2:#FFD740;--white:#F0EDE8;--muted:#777;--red:#E63946;}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 5vw;background:rgba(8,8,8,0.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,194,0,0.15);}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;}.logo span{color:var(--yellow);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--yellow);}
+  .nav-btn{background:var(--yellow);color:var(--black);padding:0.6rem 1.4rem;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.08em;text-decoration:none;text-transform:uppercase;transition:background 0.2s,transform 0.15s;}
+  .nav-btn:hover{background:var(--yellow2);transform:translateY(-1px);}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 5vw 7rem;position:relative;overflow:hidden;}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,#080808 0%,#1a1200 50%,#080808 100%);}
+  .hero-pattern{position:absolute;inset:0;z-index:0;background-image:repeating-linear-gradient(45deg,rgba(245,194,0,0.03) 0px,rgba(245,194,0,0.03) 1px,transparent 1px,transparent 60px),repeating-linear-gradient(-45deg,rgba(245,194,0,0.03) 0px,rgba(245,194,0,0.03) 1px,transparent 1px,transparent 60px);}
+  .hero-glow{position:absolute;top:20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,194,0,0.12) 0%,transparent 70%);z-index:0;}
+  .hero-badge{position:relative;z-index:1;display:inline-flex;align-items:center;gap:0.5rem;background:rgba(245,194,0,0.1);border:1px solid rgba(245,194,0,0.3);border-radius:2px;padding:0.4rem 1rem;margin-bottom:1.5rem;width:fit-content;}
+  .hero-badge span{font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--yellow);}
+  .hero-badge::before{content:'';width:6px;height:6px;background:var(--yellow);border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,12vw,10rem);line-height:0.9;letter-spacing:3px;position:relative;z-index:1;}
+  .hero h1 .outline{-webkit-text-stroke:2px var(--yellow);color:transparent;}
+  .hero-sub{font-size:1.1rem;font-weight:300;color:rgba(240,237,232,0.6);max-width:480px;line-height:1.7;margin-top:1.5rem;position:relative;z-index:1;}
+  .hero-actions{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-yellow{background:var(--yellow);color:var(--black);padding:1rem 2.4rem;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;transition:background 0.2s,transform 0.15s;display:inline-block;}
+  .btn-yellow:hover{background:var(--yellow2);transform:translateY(-2px);}
+  .btn-outline-y{border:2px solid var(--yellow);color:var(--yellow);padding:1rem 2.4rem;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.06em;text-decoration:none;text-transform:uppercase;transition:all 0.2s;display:inline-block;}
+  .btn-outline-y:hover{background:var(--yellow);color:var(--black);transform:translateY(-2px);}
+  .hero-stats{display:flex;gap:3rem;margin-top:4rem;position:relative;z-index:1;flex-wrap:wrap;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.07);}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:2px;color:var(--yellow);line-height:1;}
+  .stat-lbl{font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+
+  .marquee-wrap{overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:1rem 0;background:#0d0d0d;}
+  .marquee-track{display:flex;gap:2.5rem;width:max-content;animation:marquee 20s linear infinite;}
+  .marquee-item{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:1rem;}
+  .marquee-item::after{content:'◆';color:var(--yellow);font-size:0.4rem;}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  section{padding:7rem 5vw;}
+  .sec-label{font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--yellow);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;}
+  .sec-label::before{content:'';display:block;width:24px;height:2px;background:var(--yellow);}
+  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:2px;line-height:1;}
+  .sec-title span{color:var(--yellow);}
+
+  #about{background:var(--dark);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem;align-items:center;}
+  .about-box{background:var(--card);border:1px solid rgba(245,194,0,0.15);border-radius:4px;padding:3rem;position:relative;overflow:hidden;}
+  .about-icon-row{display:flex;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+  .about-icon{width:56px;height:56px;background:rgba(245,194,0,0.1);border:1px solid rgba(245,194,0,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+  .about-text p{font-size:1rem;color:rgba(240,237,232,0.65);line-height:1.8;margin-bottom:1.2rem;}
+  .about-text strong{color:var(--yellow);}
+  .feature-row{display:flex;flex-direction:column;gap:1rem;}
+  .feature-item{padding:1.2rem;background:rgba(245,194,0,0.06);border:1px solid rgba(245,194,0,0.12);border-radius:4px;}
+  .feature-item h4{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.3rem;}
+  .feature-item p{font-size:0.88rem;color:var(--muted);}
+
+  #programs{background:var(--black);}
+  .programs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;margin-top:4rem;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;}
+  .program-card{background:var(--card);padding:2.5rem 2rem;transition:background 0.25s;position:relative;overflow:hidden;cursor:pointer;}
+  .program-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+  .program-card:hover::after{transform:scaleX(1);}
+  .program-card:hover{background:#1c1c1c;}
+  .program-emoji{font-size:2.2rem;margin-bottom:1.2rem;display:block;}
+  .program-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.6rem;}
+  .program-card p{font-size:0.9rem;color:var(--muted);line-height:1.7;}
+  .program-tag{display:inline-block;margin-top:1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--yellow);border:1px solid rgba(245,194,0,0.3);border-radius:2px;padding:0.25rem 0.6rem;}
+
+  #trainers{background:var(--dark);}
+  .trainers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;margin-top:4rem;}
+  .trainer-card{background:var(--card);border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);transition:transform 0.25s,border-color 0.25s;}
+  .trainer-card:hover{transform:translateY(-6px);border-color:rgba(245,194,0,0.3);}
+  .trainer-avatar{height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+  .t1{background:linear-gradient(135deg,#1a1200,#2d2000);}
+  .t2{background:linear-gradient(135deg,#0d1a0d,#1a2d1a);}
+  .t3{background:linear-gradient(135deg,#1a0d0d,#2d1a1a);}
+  .t4{background:linear-gradient(135deg,#0d0d1a,#1a1a2d);}
+  .trainer-info{padding:1.5rem;}
+  .trainer-info h3{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.3rem;}
+  .trainer-role{font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--yellow);margin-bottom:0.6rem;}
+  .trainer-info p{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+
+  #membership{background:var(--black);}
+  .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;margin-top:4rem;}
+  .plan{background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:2.5rem 2rem;position:relative;transition:transform 0.2s,border-color 0.2s;}
+  .plan:hover{transform:translateY(-4px);border-color:rgba(245,194,0,0.3);}
+  .plan.featured{border-color:var(--yellow);background:#1a1500;}
+  .plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--yellow);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 1rem;border-radius:2px;white-space:nowrap;}
+  .plan-name{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem;}
+  .plan-price{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:2px;line-height:1;color:var(--white);}
+  .plan-price span{font-size:1.2rem;color:var(--muted);font-family:'Barlow',sans-serif;font-weight:300;}
+  .plan-period{font-size:0.8rem;color:var(--muted);margin-bottom:1.5rem;}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:2rem;}
+  .plan-features li{font-size:0.9rem;color:rgba(240,237,232,0.7);display:flex;align-items:center;gap:0.6rem;}
+  .plan-features li::before{content:'✓';color:var(--yellow);font-weight:700;font-size:0.8rem;flex-shrink:0;}
+  .plan-features li.no::before{content:'✗';color:var(--muted);}
+  .plan-features li.no{color:var(--muted);}
+  .btn-plan{display:block;text-align:center;padding:0.9rem;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  .btn-plan-outline{border:2px solid rgba(255,255,255,0.2);color:var(--white);}
+  .btn-plan-outline:hover{border-color:var(--yellow);color:var(--yellow);}
+  .btn-plan-filled{background:var(--yellow);color:var(--black);}
+  .btn-plan-filled:hover{background:var(--yellow2);}
+
+  #schedule{background:var(--dark);}
+  .schedule-table{width:100%;border-collapse:collapse;margin-top:3rem;}
+  .schedule-table th{background:var(--yellow);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:1rem;text-align:center;}
+  .schedule-table td{border:1px solid rgba(255,255,255,0.06);padding:0.9rem 1rem;text-align:center;font-size:0.88rem;color:var(--muted);background:var(--card);}
+  .schedule-table tr:hover td{background:#1c1c1c;}
+  .schedule-table td.time{color:var(--white);font-weight:600;}
+  .class-pill{display:inline-block;padding:0.25rem 0.7rem;border-radius:2px;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+  .pill-y{background:rgba(245,194,0,0.15);color:var(--yellow);}
+  .pill-r{background:rgba(230,57,70,0.15);color:var(--red);}
+  .pill-g{background:rgba(39,174,96,0.15);color:#27AE60;}
+  .pill-b{background:rgba(41,128,185,0.15);color:#2980B9;}
+
+  #testimonials{background:var(--black);}
+  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:4rem;}
+  .testi-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:2rem;transition:border-color 0.25s;}
+  .testi-card:hover{border-color:rgba(245,194,0,0.25);}
+  .stars{color:var(--yellow);font-size:1rem;margin-bottom:1rem;letter-spacing:2px;}
+  .testi-card p{font-size:0.95rem;color:rgba(240,237,232,0.7);line-height:1.75;font-style:italic;margin-bottom:1.5rem;}
+  .testi-author{display:flex;align-items:center;gap:0.8rem;}
+  .testi-avatar{width:40px;height:40px;border-radius:50%;background:rgba(245,194,0,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+  .testi-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.95rem;letter-spacing:0.05em;text-transform:uppercase;}
+  .testi-tag{font-size:0.75rem;color:var(--muted);}
+
+  .cta-banner{background:var(--yellow);padding:5rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+  .cta-banner h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);letter-spacing:2px;color:var(--black);max-width:550px;line-height:1.1;}
+  .btn-black{background:var(--black);color:var(--yellow);padding:1rem 2.4rem;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;display:inline-block;}
+  .btn-black:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+
+  #contact{background:var(--dark);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:4rem;align-items:start;}
+  .contact-info h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:1rem;}
+  .contact-info p{font-size:0.95rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+  .contact-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
+  .c-icon{width:46px;height:46px;background:rgba(245,194,0,0.1);border:1px solid rgba(245,194,0,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .c-detail strong{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.95rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.1rem;}
+  .c-detail span{font-size:0.9rem;color:var(--muted);}
+  .contact-form{display:flex;flex-direction:column;gap:1rem;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .contact-form input,.contact-form select,.contact-form textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.9rem 1rem;color:var(--white);font-family:'Barlow',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;width:100%;}
+  .contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,0.25);}
+  .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{border-color:rgba(245,194,0,0.5);}
+  .contact-form select option{background:var(--dark);}
+  .contact-form textarea{resize:vertical;min-height:110px;}
+  .btn-submit-gym{background:var(--yellow);color:var(--black);border:none;padding:1rem;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;width:100%;transition:background 0.2s,transform 0.15s;}
+  .btn-submit-gym:hover{background:var(--yellow2);transform:translateY(-1px);}
+
+  footer{background:var(--black);padding:2.5rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,0.06);}
+  .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;}.footer-logo span{color:var(--yellow);}
+  footer p{font-size:0.82rem;color:var(--muted);}
+
+  .wewebify-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:var(--yellow);color:var(--black);padding:0.6rem 1.2rem;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 20px rgba(245,194,0,0.3);transition:transform 0.15s,box-shadow 0.15s;}
+  .wewebify-badge:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,194,0,0.4);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+  .hero-badge{animation:fadeUp 0.7s ease both 0s;}
+  .hero h1{animation:fadeUp 0.7s ease both 0.1s;}
+  .hero-sub{animation:fadeUp 0.7s ease both 0.25s;}
+  .hero-actions{animation:fadeUp 0.7s ease both 0.4s;}
+  .hero-stats{animation:fadeUp 0.7s ease both 0.55s;}
+
+  @media(max-width:768px){
+    .nav-links{display:none;}
+    .about-grid,.contact-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .cta-banner{text-align:center;justify-content:center;}
+    .schedule-table{font-size:0.75rem;}
+  }
+</style>
+</head>
+<body>
+
+<a href="wewebify.html" class="wewebify-badge">⚡ Built by Wewebify</a>
+
+<nav>
+  <div class="logo">Iron<span>Forge</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#membership">Pricing</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Join Now</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge"><span>Now Open in Indore</span></div>
+  <h1>FORGE<br>YOUR <span class="outline">BODY</span></h1>
+  <p class="hero-sub">Indore's most equipped fitness centre. Expert trainers, premium equipment, and a community that pushes you further every single day.</p>
+  <div class="hero-actions">
+    <a href="#membership" class="btn-yellow">View Memberships →</a>
+    <a href="#programs" class="btn-outline-y">Our Programs</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">2500+</div><div class="stat-lbl">Active Members</div></div>
+    <div><div class="stat-num">12</div><div class="stat-lbl">Expert Trainers</div></div>
+    <div><div class="stat-num">8</div><div class="stat-lbl">Programs</div></div>
+    <div><div class="stat-num">5★</div><div class="stat-lbl">Google Rating</div></div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Weight Training</span><span class="marquee-item">CrossFit</span><span class="marquee-item">Zumba</span><span class="marquee-item">MMA</span><span class="marquee-item">Yoga</span><span class="marquee-item">Personal Training</span><span class="marquee-item">Cardio Zone</span><span class="marquee-item">Nutrition Coaching</span>
+    <span class="marquee-item">Weight Training</span><span class="marquee-item">CrossFit</span><span class="marquee-item">Zumba</span><span class="marquee-item">MMA</span><span class="marquee-item">Yoga</span><span class="marquee-item">Personal Training</span><span class="marquee-item">Cardio Zone</span><span class="marquee-item">Nutrition Coaching</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="sec-label">Who We Are</div>
+  <h2 class="sec-title">INDORE'S <span>PREMIER</span> FITNESS CENTRE</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>At <strong>IronForge Gym</strong>, we believe fitness is not a destination — it's a way of life. Since 2018, we've been helping the people of Indore transform their bodies and their mindset.</p>
+      <p>Whether you're a complete beginner or a competitive athlete, our world-class trainers and state-of-the-art equipment are here to help you hit every goal you set.</p>
+      <p>We're not just a gym. We're a <strong>community of people who refuse to quit.</strong></p>
+      <div style="margin-top:2rem;"><a href="#membership" class="btn-yellow">Start Your Journey →</a></div>
+    </div>
+    <div>
+      <div class="about-box">
+        <div class="about-icon-row">
+          <div class="about-icon">🏋️</div><div class="about-icon">🥊</div><div class="about-icon">🧘</div><div class="about-icon">🔥</div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-item"><h4>Premium Equipment</h4><p>5000+ sq ft of world-class machines & free weights</p></div>
+          <div class="feature-item"><h4>Certified Trainers</h4><p>12 ISSA & ACE certified fitness professionals</p></div>
+          <div class="feature-item"><h4>Open 6AM – 10PM</h4><p>7 days a week, 365 days a year</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="programs">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">OUR <span>PROGRAMS</span></h2>
+  <div class="programs-grid">
+    <div class="program-card"><span class="program-emoji">🏋️</span><h3>Weight Training</h3><p>Build serious muscle with structured progressive overload programs designed by certified coaches.</p><span class="program-tag">All Levels</span></div>
+    <div class="program-card"><span class="program-emoji">🔥</span><h3>CrossFit</h3><p>High-intensity functional training that builds strength, endurance and mental toughness.</p><span class="program-tag">Intermediate</span></div>
+    <div class="program-card"><span class="program-emoji">🥊</span><h3>MMA & Boxing</h3><p>Learn real martial arts techniques while getting the best full-body workout of your life.</p><span class="program-tag">All Levels</span></div>
+    <div class="program-card"><span class="program-emoji">🧘</span><h3>Yoga & Mobility</h3><p>Improve flexibility, recovery, and mental clarity with daily guided yoga and mobility sessions.</p><span class="program-tag">Beginners Welcome</span></div>
+    <div class="program-card"><span class="program-emoji">💃</span><h3>Zumba</h3><p>Burn calories and have fun with our high-energy Zumba classes — no experience needed.</p><span class="program-tag">Beginners Welcome</span></div>
+    <div class="program-card"><span class="program-emoji">🎯</span><h3>Personal Training</h3><p>1-on-1 sessions with a dedicated trainer who builds a program around your exact goals.</p><span class="program-tag">Premium</span></div>
+  </div>
+</section>
+
+<section id="trainers">
+  <div class="sec-label">Meet the Team</div>
+  <h2 class="sec-title">OUR <span>TRAINERS</span></h2>
+  <div class="trainers-grid">
+    <div class="trainer-card"><div class="trainer-avatar t1">💪</div><div class="trainer-info"><h3>Arjun Rathore</h3><div class="trainer-role">Head Strength Coach</div><p>10+ years experience. ISSA Certified. Specialises in powerlifting and muscle hypertrophy.</p></div></div>
+    <div class="trainer-card"><div class="trainer-avatar t2">🏃</div><div class="trainer-info"><h3>Priya Malhotra</h3><div class="trainer-role">CrossFit & Cardio</div><p>Former national athlete. CrossFit Level 2 trainer. Expert in fat loss and endurance training.</p></div></div>
+    <div class="trainer-card"><div class="trainer-avatar t3">🥊</div><div class="trainer-info"><h3>Kabir Sheikh</h3><div class="trainer-role">MMA & Boxing Coach</div><p>Pro MMA fighter with 8 years coaching experience. Teaches discipline, technique and fitness.</p></div></div>
+    <div class="trainer-card"><div class="trainer-avatar t4">🧘</div><div class="trainer-info"><h3>Meera Joshi</h3><div class="trainer-role">Yoga & Wellness</div><p>200-hour RYT certified. Specialises in therapeutic yoga, mobility and stress management.</p></div></div>
+  </div>
+</section>
+
+<section id="membership">
+  <div class="sec-label">Pricing</div>
+  <h2 class="sec-title">MEMBERSHIP <span>PLANS</span></h2>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">₹999 <span>/mo</span></div>
+      <div class="plan-period">Billed monthly</div>
+      <ul class="plan-features">
+        <li>Gym floor access</li><li>Locker room</li><li>2 group classes/week</li>
+        <li class="no">Personal trainer</li><li class="no">Nutrition plan</li><li class="no">Guest passes</li>
+      </ul>
+      <a href="#contact" class="btn-plan btn-plan-outline">Get Started</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">₹1,799 <span>/mo</span></div>
+      <div class="plan-period">Billed monthly</div>
+      <ul class="plan-features">
+        <li>Gym floor access</li><li>Locker room</li><li>Unlimited group classes</li>
+        <li>2 PT sessions/month</li><li>Nutrition consultation</li><li class="no">Guest passes</li>
+      </ul>
+      <a href="#contact" class="btn-plan btn-plan-filled">Get Started</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Elite</div>
+      <div class="plan-price">₹2,999 <span>/mo</span></div>
+      <div class="plan-period">Billed monthly</div>
+      <ul class="plan-features">
+        <li>Gym floor access</li><li>Locker room</li><li>Unlimited group classes</li>
+        <li>8 PT sessions/month</li><li>Full nutrition plan</li><li>2 guest passes/month</li>
+      </ul>
+      <a href="#contact" class="btn-plan btn-plan-outline">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="sec-label">Weekly Timetable</div>
+  <h2 class="sec-title">CLASS <span>SCHEDULE</span></h2>
+  <div style="overflow-x:auto;">
+    <table class="schedule-table">
+      <thead><tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr></thead>
+      <tbody>
+        <tr><td class="time">6:00 AM</td><td><span class="class-pill pill-y">Weights</span></td><td><span class="class-pill pill-r">CrossFit</span></td><td><span class="class-pill pill-y">Weights</span></td><td><span class="class-pill pill-r">CrossFit</span></td><td><span class="class-pill pill-y">Weights</span></td><td><span class="class-pill pill-b">Yoga</span></td></tr>
+        <tr><td class="time">8:00 AM</td><td><span class="class-pill pill-b">Yoga</span></td><td><span class="class-pill pill-g">Zumba</span></td><td><span class="class-pill pill-b">Yoga</span></td><td><span class="class-pill pill-g">Zumba</span></td><td><span class="class-pill pill-b">Yoga</span></td><td><span class="class-pill pill-r">CrossFit</span></td></tr>
+        <tr><td class="time">5:00 PM</td><td><span class="class-pill pill-g">Zumba</span></td><td><span class="class-pill pill-y">Weights</span></td><td><span class="class-pill pill-g">Zumba</span></td><td><span class="class-pill pill-y">Weights</span></td><td><span class="class-pill pill-g">Zumba</span></td><td><span class="class-pill pill-y">Weights</span></td></tr>
+        <tr><td class="time">7:00 PM</td><td><span class="class-pill pill-r">MMA</span></td><td><span class="class-pill pill-b">Yoga</span></td><td><span class="class-pill pill-r">MMA</span></td><td><span class="class-pill pill-b">Yoga</span></td><td><span class="class-pill pill-r">MMA</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="sec-label">Member Stories</div>
+  <h2 class="sec-title">REAL <span>RESULTS</span></h2>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="stars">★★★★★</div><p>"Lost 18kg in 5 months with IronForge. The trainers genuinely care and push you every single session. Best decision I ever made."</p><div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Rahul Sharma</div><div class="testi-tag">Member since 2022</div></div></div></div>
+    <div class="testi-card"><div class="stars">★★★★★</div><p>"The Zumba and yoga classes are incredible. I was nervous to join as a complete beginner but everyone here is so welcoming."</p><div class="testi-author"><div class="testi-avatar">👩</div><div><div class="testi-name">Sneha Patel</div><div class="testi-tag">Member since 2023</div></div></div></div>
+    <div class="testi-card"><div class="stars">★★★★★</div><p>"Kabir's MMA classes changed my life. I came for fitness and found a passion. Easily the best gym in Indore."</p><div class="testi-author"><div class="testi-avatar">👨</div><div><div class="testi-name">Aryan Verma</div><div class="testi-tag">Member since 2021</div></div></div></div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <h2>READY TO START YOUR FITNESS JOURNEY?</h2>
+  <a href="#contact" class="btn-black">Book a Free Trial →</a>
+</div>
+
+<section id="contact">
+  <div class="sec-label">Get in Touch</div>
+  <h2 class="sec-title">JOIN <span>IRONFORGE</span></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Visit Us Today</h3>
+      <p>Come in for a free trial session — no commitment, no pressure. Just bring yourself and we'll take care of the rest.</p>
+      <div class="contact-item"><div class="c-icon">📍</div><div class="c-detail"><strong>Address</strong><span>Plot 14, Vijay Nagar, Indore, MP 452010</span></div></div>
+      <div class="contact-item"><div class="c-icon">📞</div><div class="c-detail"><strong>Phone</strong><span>+91 98765 43210</span></div></div>
+      <div class="contact-item"><div class="c-icon">✉️</div><div class="c-detail"><strong>Email</strong><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a1baa7a6aea7baafad88afa5a9a1a4e6aba7a5">[email&#160;protected]</a></span></div></div>
+      <div class="contact-item"><div class="c-icon">🕐</div><div class="c-detail"><strong>Hours</strong><span>Mon–Sun: 6:00 AM – 10:00 PM</span></div></div>
+    </div>
+    <div>
+      <form class="contact-form" action="https://formspree.io/f/mgondobp" method="POST">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="tel" name="phone" placeholder="Phone Number">
+        </div>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <select name="interest">
+          <option value="" disabled selected>Interested in...</option>
+          <option>Basic Membership</option>
+          <option>Pro Membership</option>
+          <option>Elite Membership</option>
+          <option>Personal Training</option>
+          <option>Free Trial</option>
+        </select>
+        <textarea name="message" placeholder="Any questions or goals you'd like to share?"></textarea>
+        <button type="submit" class="btn-submit-gym">Book Free Trial →</button>
+      </form>
+      <div id="gym-success" style="display:none;margin-top:1rem;background:rgba(245,194,0,0.08);border:1px solid rgba(245,194,0,0.25);border-radius:6px;padding:1.2rem;color:#F0EDE8;font-size:0.95rem;">
+        💪 <strong>Request received!</strong> We'll call you within 24 hours to confirm your free trial.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Iron<span>Forge</span></div>
+  <p>Indore's Premier Fitness Centre</p>
+  <p>© 2025 IronForge Gym. Website by <a href="wewebify.html" style="color:var(--yellow);text-decoration:none;">Wewebify</a></p>
+</footer>
+
+<script>
+  const gymForm = document.querySelector('.contact-form');
+  const gymSuccess = document.getElementById('gym-success');
+  if(gymForm){
+    gymForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const btn = gymForm.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending…'; btn.disabled = true;
+      const data = new FormData(gymForm);
+      try{
+        const res = await fetch(gymForm.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});
+        if(res.ok){
+          gymForm.reset();
+          gymForm.style.display = 'none';
+          gymSuccess.style.display = 'block';
+        } else {
+          btn.textContent = 'Failed. Try again.'; btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Error. Try again.'; btn.disabled = false;
+      }
+    });
+  }
+</script>
+</body>
+</html>
